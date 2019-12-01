@@ -1,0 +1,855 @@
+<html>
+<head>
+<title>Cryogenics | Simple Linde Hampson Cycle</title>
+<link rel="shortcut icon" href="snow.ico" type="image/x-icon" />
+<style>
+    
+    @font-face {
+    font-family: Raleway;
+    src: url("assets/fonts/Raleway.ttf");
+    }
+
+    @font-face {
+    font-family: RalewayThin;
+    src: url("assets/fonts/Raleway2.ttf");
+    }
+
+    html, body{
+        height: 100%;
+        width: 100%;
+        padding: 0px;
+        margin: 0px;
+        overflow: hidden;
+        cursor: default;
+    }
+
+    .container{
+        display: inline-block;
+        position: relative;
+    }
+
+    .tops{
+        height: 10%;
+        border-bottom: 1px solid #dbdbdb;
+        float: left;
+    }
+
+    .bl{
+        height:100%;
+        width: 1px;
+        background-color: #dbdbdb;
+        position:absolute;
+        left: 0%;
+        top: 0%;
+    }
+
+    #top1{
+        width: 80%;        
+    }
+
+    #top2{
+        width: 20%;
+    }
+
+    .bots{
+        height: 90%;
+        float:left;
+    }
+
+    #bot1{
+        width: 80%;
+    }
+
+    #bot2{
+        width:20%;
+        overflow: hidden;
+    }
+
+    #navmen{
+        height: 100%;
+        margin-right: 30px;
+        position: relative;
+        float: right;
+    }
+
+    .navitem{
+        font-family: Raleway;
+        font-size: 13px;
+        letter-spacing: 2px;
+        color: #222222;
+        margin-left: 35px;
+        margin-top: 25px;
+        position: relative;
+        float:left;
+    }
+
+    .selected{
+        color: #ff6868;
+    }
+    
+    #tit{
+        font-family: Raleway;
+        font-size: 20px;
+        letter-spacing: 1px;
+        color: #222222;
+        margin-left: 30px;
+        margin-top: 20px;
+        position: relative;
+        float:left;
+    }
+
+    #vs{
+        color: #ff6868;
+    }
+
+    #legend{
+        margin-top: 10px;
+        padding: 20px;
+        width: 150px;
+        position: absolute;
+        background-color: white;
+        color: #222;
+        z-index: 2;
+        box-shadow: 0px 2px 10px #ddd;
+        display: none;
+    }
+
+    .lhead{
+        font-size: 11px;
+        line-height: 17px;
+    }
+
+    .lbod{
+        font-size: 8px;
+        margin-top: 2px;
+    }
+
+    #litem:hover #legend{
+        display: block;
+        opacity: 0.95;
+    }
+
+    #bContCont{
+        height:100%;
+        width:100%;
+        position:absolute;
+        left: 0%;
+        top: 0%;
+        padding-left: 10%;
+        background-color: white;
+        font-family: RalewayThin;
+    }
+
+    #temp{
+        font-size: 20px;
+        margin-top: 13px;
+        margin-right: 10px;
+        margin-left: 10px;
+        float: left;
+    }
+
+    #arrL{
+        color: #ff6868;
+        font-size: 15px;
+        margin-top: 22px;
+        float: left;
+        position: relative;
+        transition: 0.3s all;
+    }
+
+    #arrL:hover{
+        transform: translate(0px, 2px);
+    }
+
+    #arrR{
+        color: #ff6868;
+        font-size: 15px;
+        margin-top: 23px;
+        float: left;
+        position: relative;
+        transition: 0.3s all;
+    }
+
+    #arrR:hover{
+        transform: translate(0px, -2px);
+    }
+
+    #trip{
+        position:relative;
+        float: right;
+        height: 20px;
+        width:20px;
+        margin-top: 20px;
+        margin-right: 20%;
+        border-radius: 100%;
+        overflow: hidden;
+    }
+
+    #trip:hover .tripin{
+        height: 100%;
+    }
+
+    .tripin{
+        width:30%;
+        float: left;
+        position: relative;
+        transition: all 0.3s;
+    }
+
+    #trip1{
+        height: 50%;
+        background-color: #ff6868;
+    }
+
+    #trip2{
+        height: 70%;
+        background-color: #b0e57c;
+        margin-left: 5%;
+    }
+
+    #trip3{
+        height: 90%;
+        background-color: #56baec;
+        margin-left: 5%;
+    }
+
+    #tripsame{
+        position:relative;
+        float: right;
+        height: 20px;
+        width:20px;
+        margin-top: 20px;
+        margin-right: 20px;
+        border-radius: 100%;
+        overflow: hidden;
+    }
+
+    #tripsame:hover .tripsin{
+        height: 100%;
+        margin-top: 0%;
+    }
+
+    .tripsin{
+        width:30%;
+        background-color: #ff6868;
+        float: left;
+        position: relative;
+        transition: all 0.3s;
+    }
+
+    #trips3{
+        margin-top: 50%;
+        height: 50%;
+        opacity: 0.6;
+    }
+
+    #trips2{
+        height: 70%;
+        margin-top: 30%;
+        margin-right: 5%;
+        opacity: 0.8;
+    }
+
+    #trips1{
+        height: 90%;
+        margin-top: 10%;
+        margin-right: 5%;
+    }
+
+    #gcontcont{
+        height:100%;
+        width:100%;
+        position:absolute;
+        top:0%;
+        left:0%;
+    }
+
+    .gcont{
+        height:30%;
+        width:100%;
+        padding-left:10%;
+        transition: 0.3s all;
+        background-color: white;
+        border-bottom: 1px solid #dbdbdb;
+        font-family: RalewayThin;
+        position: relative;
+    }
+
+    .gcont:hover{
+        transform: translate(0px, -3px);
+        box-shadow: 0px 5px 15px #eeeeee;
+    }
+
+    .ghead{
+        font-weight: bold;
+        letter-spacing: 2px;
+        color: #666666;
+        margin-bottom: 5px;
+        padding-top: 3%;
+    }
+
+    .gdes{
+        color: #BBBBBB;
+        font-size: 10px;
+    }
+
+    .gasBub{
+        height:0px;
+        border-top: 10px solid white;
+        border-right: 10px solid transparent;
+        position:absolute;
+        bottom:10px;
+        right:40px;
+    }
+
+    #gasb1{
+        background-color:#ff6868;
+    }
+
+    #gasb2{
+        background-color:#b0e57c;
+    }
+
+    #gasb3{
+        background-color:#56baec;
+    }
+
+
+    #cred1{
+        position: absolute;
+        bottom: -50%;
+        left: 0%;
+        width: 80%;
+        height: 51%;
+        border-top: 1px solid #dbdbdb;
+        background-color: white;
+        font-family: Raleway;
+        color: #666;
+    }
+
+    #incred{
+        position: absolute;
+        bottom: 30px;
+        left: 30px;
+    }
+
+    #incred2{
+        position: absolute;
+        bottom: 30px;
+        right: 30px;
+        text-align: right;
+    }
+
+    #credhead{
+        letter-spacing: 2px;
+        font-size: 15px;
+        line-height: 20px;
+    }
+
+    #credshead{
+        letter-spacing: 2px;
+        font-size: 10px;
+        color: #bbb;
+        line-height: 12px;
+    }
+
+    a{
+        text-decoration: none;
+        color: #bbb;
+        transition: all 0.3s;
+    }
+
+    a:hover{
+        color: #ff6868;
+    }
+
+</style>
+</head>
+<body>
+    <div class="container tops" id="top1">
+        <span id="tit"><b>YIELD <span id="vs">vs</span> PRESSURE</b></span>
+        <div id="navmen">
+            <span class="navitem selected"><b>ANALYSIS</b></span>
+            <span class="navitem" id="citem"><b>CREDITS</b></span>
+            <span class="navitem" id="litem"><b>LEGEND</b>
+            <div id="legend">
+                <span class="lhead"><b>AMBIANCE</b><br/></span>
+                <span class="lbod">Pressure: 1 Bar<br/><br/></span>
+                <span class="lhead"><b>AXES</b><br/></span>
+                <span class="lbod">X: Pressure (Bar)<br/></span>
+                <span class="lbod">Y: Yield<br/></span>
+            </div>
+            </span>
+        </div>
+    </div>
+    <div class="container tops" id="top2">
+        <div id="bContCont">
+            <span id="arrL">&#x25BC;</span>
+            <p class="ghead" id="temp">300K</p>
+            <span id="arrR">&#x25B2;</span>
+            <div id="trip">
+                <div class="tripin" id="trip1"></div>
+                <div class="tripin" id="trip2"></div>
+                <div class="tripin" id="trip3"></div>
+            </div>
+            <div id="tripsame">
+                <div class="tripsin" id="trips1"></div>
+                <div class="tripsin" id="trips2"></div>
+                <div class="tripsin" id="trips3"></div>
+            </div>
+        </div>
+        <div class="bl"></div>
+    </div>
+    <div class="container bots" id="bot1">
+        <canvas id="graph"></canvas>
+    </div>
+    <div class="container bots" id="bot2">
+        <div id="gContCont">
+            <div class="gcont" data-gas="1">
+                <p class="ghead">NITROGEN</p>
+                <span class="gdes">Molecular Formula: N<sub>2</sub><br>
+                Normal Boiling Point: 77.3K<br>
+                Liquid Density: 809 kg/m<sup>3</sup><br/>
+                Enthalpy at T<sub>f</sub>: -3.4213 kj/mol</span>
+                <div class="gasBub" id="gasb1"></div>
+            </div>
+            <div class="gcont" data-gas="2">
+                <p class="ghead">ARGON</p>
+                <span class="gdes">Molecular Formula: Ar<br>
+                Normal Boiling Point: 87.3K<br>
+                Liquid Density: 1393 kg/m<sup>3</sup><br/>
+                Enthalpy at T<sub>f</sub>: -4.6948 kj/mol</span>
+                <div class="gasBub" id="gasb2"></div>
+            </div>
+            <div class="gcont" data-gas="3">
+                <p class="ghead">OXYGEN</p>
+                <span class="gdes">Molecular Formula: O<sub>2</sub><br>
+                Normal Boiling Point: 90.2K<br>
+                Liquid Density: 1141 kg/m<sup>3</sup><br/>
+                Enthalpy at T<sub>f</sub>: -4.2669 kj/mol</span>
+                <div class="gasBub" id="gasb3"></div>
+            </div>
+        </div>
+        <div class="bl"></div>
+    </div>
+
+    <div class="container" id="cred1">
+        <div id="incred">
+            <span id="credhead"><b>CRYOGENICS ME004</b></span><br/>
+            <span id="credshead"><b>INNOVATIVE ASSIGNMENT 2017<br/>INSTITUTE OF TECHNOLOGY,<br/><a href="http://nirmauni.ac.in" target="_blank">NIRMA UNIVERSITY</a></b></span><br/>
+            <span id="credhead"><br/><b>DATA</b></span><br/>
+            <span id="credshead"><a href="http://webbook.nist.gov/chemistry/fluid/" target="_blank"><b>NIST WEB BOOK</b></a><br/></span>
+            <span id="credhead"><br/><b>REFERENCES</b></span><br/>
+            <span id="credshead"><a href="http://www.thermopedia.com/content/676/" target="_blank"><b>THERMOPEDIA</b></a><br/></span>
+            <span id="credshead"><a href="http://webbook.nist.gov/chemistry/fluid/" target="_blank"><b>NIST WEB BOOK</b></a><br/></span>
+            <span id="credshead"><a href="https://www.abebooks.com/9780195035674/Cryogenic-Systems-Monographs-Cryogenics-Randall-0195035674/plp" target="_blank"><b>CRYOGENIC SYSTEMS BY R.F.BARRON</b></a><br/></span>
+            <span id="credhead"><br/><b>DESIGN</b></span><br/>
+            <span id="credshead"><a href="http://fonts.google.com" target="_blank"><b>GOOGLE FONTS</b></a><br/></span>
+            <span id="credshead"><a href="http://chartjs.org" target="_blank"><b>CHART.JS</b></a><br/></span>
+        </div>
+        <div id="incred2">
+            <span id="credhead"><b>14BCE033</b><br/></span>
+            <span id="credshead"><b>BONNY HAVELIWALA</b><br/></span>
+            <span id="credhead"><b>14BCE117</b><br/></span>
+            <span id="credshead"><b>SHIVANG SINGH</b><br/></span>
+            <span id="credhead"><b>14BCE124</b><br/></span>
+            <span id="credshead"><b>NIKUNJ TRIVEDI</b><br/></span>
+        </div>
+    </div>
+</body>
+<script src="assets/scripts/jquery.js"></script>
+<script src="assets/scripts/chart.js"></script>
+<script src="assets/scripts/chartbundle.js"></script>
+<script>
+    $(document).ready(function(){
+        
+        var temp = 300;
+        var gas = 1;
+        var chartType = 1;
+        var theme = "#ff6868";
+
+        var ctx = $("#graph");
+        ctx.css("height",$("#bot1").css("height"));
+        ctx.css("width",$("#bot1").css("width"));
+
+        var labs = [];
+        for($i=0; $i<=600; $i+=50){
+            labs.push($i);
+        }
+
+        // For single chart
+
+        function updateSingleChart(){
+            $.ajax({
+                type:'get',
+                url:'server.php?gas='+gas+'&temp='+temp,
+                dataType:'JSON',
+                success: function(json){
+                    var myChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: labs,
+                        datasets: [{
+                            label: 'Yield',
+                            data: json,
+                            backgroundColor: 'rgba(255,255,255,0)',
+                            borderColor: theme,
+                            pointBackgroundColor:theme,
+                            pointRadius:3,
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        legend:{
+                            display:false
+                        },
+                        layout:{
+                            padding: 10
+                        },
+                        scales: {
+                            yAxes:[{
+                                ticks:{
+                                    fontSize:10
+                                }
+                            }],
+                            xAxes: [{
+                                ticks: {
+                                    min: 0,
+                                    stepsize: 10,
+                                    fontSize: 10,
+                                    beginAtZero:true
+                                    }
+                                }]
+                            }
+                        }
+                    });
+                }
+            });
+        }
+
+        // For multiple gas chart
+
+        var mjsons = [{},{},{}];
+        var mstate = 0;
+
+        function updateMultiChart(){
+            
+            mjsons = [{},{},{}];
+            mstate = 0;
+
+            $.ajax({
+                type:'get',
+                url:'server.php?gas=1&temp='+temp,
+                dataType:'JSON',
+                success: function(json){
+                    mstate+=1;
+                    mjsons[0]=json;
+                    checkMultiState();
+                }
+            });
+            $.ajax({
+                type:'get',
+                url:'server.php?gas=2&temp='+temp,
+                dataType:'JSON',
+                success: function(json){
+                    mstate+=1;
+                    mjsons[1]=json;
+                    checkMultiState();
+                }
+            });
+            $.ajax({
+                type:'get',
+                url:'server.php?gas=3&temp='+temp,
+                dataType:'JSON',
+                success: function(json){
+                    mstate+=1;
+                    mjsons[2]=json;
+                    checkMultiState();
+                }
+            });
+        }
+
+        function checkMultiState(){
+            if(mstate==3){
+                var myChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: labs,
+                        datasets: [{
+                            label: 'Nitrogen',
+                            data: mjsons[0],
+                            backgroundColor: 'rgba(255,255,255,0)',
+                            borderColor: '#ff6868',
+                            pointBackgroundColor: '#ff6868',
+                            pointRadius:3,
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Argon',
+                            data: mjsons[1],
+                            backgroundColor: 'rgba(255,255,255,0)',
+                            borderColor: '#b0e57c',
+                            pointBackgroundColor: '#b0e57c',
+                            pointRadius:3,
+                            borderWidth: 1
+                        },
+                        {
+                            label: 'Oxygen',
+                            data: mjsons[2],
+                            backgroundColor: 'rgba(255,255,255,0)',
+                            borderColor: '#56baec',
+                            pointBackgroundColor: '#56baec',
+                            pointRadius:3,
+                            borderWidth: 1
+                        }
+                        ]
+                    },
+                    options: {
+                        legend:{
+                            display: false
+                        },
+                        layout:{
+                            padding: 10
+                        },
+                        scales: {
+                            yAxes:[{
+                                ticks:{
+                                    fontSize:10
+                                }
+                            }],
+                            xAxes: [{
+                                ticks: {
+                                    min: 0,
+                                    stepsize: 10,
+                                    fontSize: 10,
+                                    beginAtZero:true
+                                    }
+                                }]
+                            }
+                        }
+                    });
+            }
+        }
+
+        // For multiple temperature chart
+
+        var cjsons = [{},{},{}];
+        var cstate = 0;
+
+        function updateTempChart(){
+            
+            cjsons = [{},{},{}];
+            cstate = 0;
+
+            $.ajax({
+                type:'get',
+                url:'server.php?gas='+gas+'&temp=300',
+                dataType:'JSON',
+                success: function(json){
+                    cstate+=1;
+                    cjsons[0]=json;
+                    checkTempState();
+                }
+            });
+            $.ajax({
+                type:'get',
+                url:'server.php?gas='+gas+'&temp=350',
+                dataType:'JSON',
+                success: function(json){
+                    cstate+=1;
+                    cjsons[1]=json;
+                    checkTempState();
+                }
+            });
+            $.ajax({
+                type:'get',
+                url:'server.php?gas='+gas+'&temp=373',
+                dataType:'JSON',
+                success: function(json){
+                    cstate+=1;
+                    cjsons[2]=json;
+                    checkTempState();
+                }
+            });
+
+        }
+
+        function checkTempState(){
+            if(cstate==3){
+                var myChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: labs,
+                        datasets: [{
+                            label: '300K',
+                            data: cjsons[0],
+                            backgroundColor: 'rgba(255,255,255,0)',
+                            borderColor: theme,
+                            pointBackgroundColor: theme,
+                            pointRadius:3,
+                            borderWidth: 1
+                        },
+                        {
+                            label: '350K',
+                            data: cjsons[1],
+                            backgroundColor: 'rgba(255,255,255,0)',
+                            borderColor: theme,
+                            pointBackgroundColor: theme,
+                            pointRadius:3,
+                            borderWidth: 1
+                        },
+                        {
+                            label: '373K',
+                            data: cjsons[2],
+                            backgroundColor: 'rgba(255,255,255,0)',
+                            borderColor: theme,
+                            pointBackgroundColor: theme,
+                            pointRadius:3,
+                            borderWidth: 1
+                        }
+                        ]
+                    },
+                    options: {
+                        legend:{
+                            display: false
+                        },
+                        layout:{
+                            padding: 10
+                        },
+                        scales: {
+                            yAxes:[{
+                                ticks:{
+                                    fontSize:10
+                                }
+                            }],
+                            xAxes: [{
+                                ticks: {
+                                    min: 0,
+                                    stepsize: 10,
+                                    fontSize: 10,
+                                    beginAtZero:true
+                                    }
+                                }]
+                            }
+                        }
+                    });
+            }
+        }
+
+        // Change color scheme
+
+        function updateTheme(){
+            if(gas==1) {
+                theme = "#ff6868";
+            }
+            else if(gas==2){
+                theme = "#b0e57c";
+            }
+            else{
+                theme = "#56baec";
+            }
+
+            $('#arrL').css('color',theme);
+            $('#arrR').css('color',theme);
+            $('.tripsin').css('backgroundColor',theme);
+            $('.selected').css('color',theme);
+            $('#vs').css('color',theme);
+        }
+
+        // Temperature Controls
+
+        $('#arrL').click(function(){
+            if(chartType==2) return;
+            if(temp==350) temp=300;
+            else if(temp==373) temp=350;
+            else return;
+            $('#temp').html(temp+'K');
+            updateChart();
+        });
+
+        $('#arrR').click(function(){
+            if(chartType==2) return;
+            if(temp==300) temp=350;
+            else if(temp==350) temp=373;
+            else return;
+            $('#temp').html(temp+'K');
+            updateChart();
+        });
+
+        function resetTemp(){
+            temp = 300;
+            $('#temp').html(temp+'K');
+        }
+
+        // Gas Controls
+
+        $(".gCont").click(function(){
+            gas = $(this).data('gas');
+            chartType = 1;
+            updateChart();
+        });
+
+        $("#tripsame").click(function(){
+            chartType = 2;
+            updateChart();
+        });
+
+        $("#trip").click(function(){
+            chartType = 3;
+            updateChart();
+        });
+
+        // Chart Controls
+
+        function updateChart(){
+            if(chartType==1){
+                updateTheme();
+                updateSingleChart();
+            }
+
+            else if(chartType==2){
+                resetTemp();
+                updateTempChart();
+            }
+
+            else{
+                updateMultiChart();
+            }
+        }
+
+        updateChart();
+
+        // Credits Controls
+
+        var credstate = 0;
+
+        $('#citem').click(function(){
+            if(credstate==0){
+                gas = 1;
+                updateChart();
+                $(this).css("color","#ff6868");
+                $(this).addClass("selected");
+                $("#cred1").animate({
+                    bottom: '0%'
+                },300);
+                credstate=1;
+            }
+            else{
+                $(this).css("color","#222");
+                $(this).removeClass("selected");
+                $("#cred1").animate({
+                    bottom: '-50%'
+                },300);
+                credstate=0;
+            }
+        });
+
+         $('#citem').hover(function(){
+             $(this).css("color",theme);
+         },function(){
+             $(this).css("color","#222");
+         });
+
+    });
+</script>
+</html>
